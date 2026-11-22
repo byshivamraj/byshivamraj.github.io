@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SHIVAM RAJ — Coder</title>
+  <style>
+    :root {
+      --bg: #050811;
+      --card: #0b1120;
+      --border: #1e293b;
+      --cyan: #00f0ff;
+      --emerald: #00ff9d;
+      --violet: #a855f7;
+      --pink: #ec4899;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      cursor: none;
+    }
+
+    body {
+      background: radial-gradient(circle at 15% 15%, #0c1f33 0%, var(--bg) 45%),
+                  radial-gradient(circle at 85% 80%, #1a1033 0%, var(--bg) 50%);
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding: 48px 20px 130px;
+    }
+
+    /* Custom Animated Cursor */
+    .cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(0, 240, 255, 0.35);
+      border: 1.5px solid var(--cyan);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(6px);
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .cursor.hover-card {
+      width: 82px;
+      height: 32px;
+      background: rgba(15, 23, 42, 0.85);
+      border-color: var(--emerald);
+      box-shadow: 0 0 18px rgba(0, 255, 157, 0.4);
+    }
+
+    .cursor span {
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    .cursor.hover-card span {
+      opacity: 1;
+    }
+
+    /* Container */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 48px 36px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(11, 17, 32, 0.9), rgba(15, 26, 46, 0.85));
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.8s ease-out both;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      padding: 1.5px;
+      background: linear-gradient(90deg, var(--cyan), var(--emerald), var(--violet), var(--cyan));
+      background-size: 300% 100%;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      animation: borderFlow 6s linear infinite;
+      pointer-events: none;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(0, 255, 157, 0.1);
+      border: 1px solid rgba(0, 255, 157, 0.4);
+      font-family: "Consolas", monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--emerald);
+      margin-bottom: 18px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald);
+      animation: pulse 2s infinite;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: #f0fdfa;
+      text-shadow: 0 0 14px rgba(0, 240, 255, 0.65), 0 0 32px rgba(0, 255, 157, 0.35);
+      animation: blurReveal 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    .divider {
+      width: 240px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--cyan), var(--emerald), transparent);
+      margin: 16px 0 22px;
+    }
+
+    .college {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    .branch {
+      margin-top: 6px;
+      font-family: "Consolas", monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--emerald);
+    }
+
+    /* Section Headings */
+    .section-title {
+      margin: 48px 0 18px;
+      font-family: "Consolas", monospace;
+      font-size: 0.9rem;
+      letter-spacing: 3px;
+      color: var(--cyan);
+      text-transform: uppercase;
+    }
+
+    /* About Card */
+    .about-card {
+      padding: 28px 32px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #0b1120, #16142e);
+      border: 1px solid var(--border);
+      animation: fadeUp 0.8s ease-out 0.15s both;
+    }
+
+    .about-card ul {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+
+    .about-card li {
+      font-size: 1rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    .about-card li::before {
+      content: "▸ ";
+      color: var(--emerald);
+      font-weight: 700;
+    }
+
+    /* 4 Project Boxes Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      animation: fadeUp 0.8s ease-out 0.3s both;
+    }
+
+    .project-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      padding: 24px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, #0b1120, #151b2e);
+      border: 1px solid var(--border);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--cyan);
+      box-shadow: 0 10px 30px rgba(0, 240, 255, 0.14);
+    }
+
+    .tag {
+      font-family: "Consolas", monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .t1 { color: var(--emerald); }
+    .t2 { color: var(--pink); }
+    .t3 { color: var(--cyan); }
+    .t4 { color: #f59e0b; }
+
+    .project-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .project-card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .repo-btn {
+      display: inline-block;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #f8fafc;
+    }
+
+    /* Floating Apple-Style Dock */
+    .dock-wrap {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+    }
+
+    .dock {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .dock a {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #111827;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 20px;
+      position: relative;
+      transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s;
+    }
+
+    .dock a:hover {
+      transform: translateY(-10px) scale(1.25);
+      border-color: var(--cyan);
+    }
+
+    .dock a::after {
+      content: attr(data-label);
+      position: absolute;
+      top: -32px;
+      background: #0f172a;
+      color: #f8fafc;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .dock a:hover::after {
+      opacity: 1;
+    }
+
+    /* Keyframes */
+    @keyframes borderFlow {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes blurReveal {
+      from { opacity: 0; filter: blur(10px); transform: translateY(10px); }
+      to { opacity: 1; filter: blur(0); transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    /* Restore normal cursor on touch screens */
+    @media (pointer: coarse) {
+      * { cursor: auto; }
+      .cursor { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"><span>More +</span></div>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="pill"><span class="dot"></span> CODER</div>
+      <h1>𝚂𝙷𝙸𝚅𝙰𝙼 𝚁𝙰𝙹</h1>
+      <div class="divider"></div>
+      <div class="college">Acharya Institute of Technology</div>
+      <div class="branch">B.TECH CSE (AI &amp; ML)</div>
+    </section>
+
+    <!-- About Me -->
+    <div class="section-title">// More About Me</div>
+    <section class="about-card">
+      <ul>
+        <li>Building cool web apps, experiments, and side projects — learning by shipping.</li>
+        <li>Leveraging AI-assisted workflows to turn ideas into working code faster.</li>
+        <li>Stack I tinker &amp; build with: Python, C, C++, HTML, and JavaScript.</li>
+        <li>Always exploring new tech, clean UI designs, and leveling up one commit at a time.</li>
+      </ul>
+    </section>
+
+    <!-- 4 Project Boxes (Paste your repo URLs inside href="") -->
+    <div class="section-title">// Projects</div>
+    <section class="projects-grid">
+      <a href="#" class="project-card" target="_blank">
+        <span class="tag t1">● LATEST PROJECT</span>
+        <h3>Latest Build</h3>
+        <p>Click to explore my most recently uploaded repository.</p>
+        <span class="repo-btn">View Repo ↗</span>
+      </a>
+
+      <a href="#" class="project-card" target="_blank">
+        <span class="tag t2">● WORKING PROJECT</span>
+        <h3>In Progress...</h3>
+        <p>Currently building and shipping new updates here.</p>
+        <span class="repo-btn">View Repo ↗</span>
+      </a>
+
+      <a href="#" class="project-card" target="_blank">
+        <span class="tag t3">● OLD PROJECT</span>
+        <h3>Previous Build</h3>
+        <p>One of my earlier projects and code experiments.</p>
+        <span class="repo-btn">View Repo ↗</span>
+      </a>
+
+      <a href="#" class="project-card" target="_blank">
+        <span class="tag t4">● OLD PROJECT</span>
+        <h3>Archive Build</h3>
+        <p>An older project from my learning journey.</p>
+        <span class="repo-btn">View Repo ↗</span>
+      </a>
+    </section>
+  </main>
+
+  <!-- Floating Apple-Style Dock (Paste your links inside href="") -->
+  <nav class="dock-wrap">
+    <div class="dock">
+      <a href="https://github.com/byshivamraj" target="_blank" data-label="GitHub">🐙</a>
+      <a href="https://www.linkedin.com/in/byshivamraj/" target="_blank" data-label="LinkedIn">💼</a>
+      <a href="#" target="_blank" data-label="Instagram">📸</a>
+      <a href="#" target="_blank" data-label="Discord">💬</a>
+      <a href="#" target="_blank" data-label="Twitter">𝕏</a>
+      <a href="#" target="_blank" data-label="LeetCode">⚡</a>
+      <a href="mailto:" data-label="Email">✉️</a>
+    </div>
+  </nav>
+
+  <script>
+    const cursor = document.getElementById("cursor");
+    const cards = document.querySelectorAll(".project-card");
+
+    window.addEventListener("mousemove", (e) => {
+      cursor.style.left = e.clientX + "px";
+      cursor.style.top = e.clientY + "px";
+    });
+
+    cards.forEach((card) => {
+      card.addEventListener("mouseenter", () => cursor.classList.add("hover-card"));
+      card.addEventListener("mouseleave", () => cursor.classList.remove("hover-card"));
+    });
+  </script>
+</body>
+</html>
